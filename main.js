@@ -214,7 +214,7 @@ class Objet {
 class Potion extends Objet {
     constructor(soins) {
         super("Potion", (pokemon) => {
-            pokemon.hp = Math.min(pokemon.hp + soins, 100);  // Soigne sans dépasser 100 HP
+            pokemon.hp = Math.min(pokemon.hp + soins, 100); 
             console.log(`${pokemon.nom} récupère ${soins} HP !`);
         });
         this.soins = soins;
@@ -242,35 +242,34 @@ class Bouclier extends Objet {
 
 
 
-// Simulation d'un combat en plusieurs tours
+
 function demarrerCombat(dresseur1, dresseur2) {
     let tour = 1;
 
     while (!dresseur1.tousPokemonKO() && !dresseur2.tousPokemonKO()) {
-        console.log(`\n===== Tour ${tour} =====`);
+        console.log(`===== Tour ${tour} =====`);
 
-        // Dresseur 1 choisit une action (attaque ou utilisation d'objet)
-        console.log(`\n${dresseur1.nom}, c'est votre tour !`);
-        const pokemon1 = dresseur1.choisirPokemon(0); // Le premier Pokémon de l'équipe est sélectionné
-        if (!pokemon1) break; // S'il n'y a plus de Pokémon, le combat s'arrête
 
-        // Action : attaque ou utilisation d'objet
+        console.log(`${dresseur1.nom}, c'est votre tour !`);
+        const pokemon1 = dresseur1.choisirPokemon(0); 
+        if (!pokemon1) break; 
+
+
         if (Math.random() > 0.5) {
-            // Attaque
-            pokemon1.attaquer(dresseur2.pokemons[0]); // Le premier Pokémon de l'équipe adverse est attaqué
+
+            pokemon1.attaquer(dresseur2.pokemons[0]); 
         } else {
-            // Utiliser un objet si disponible
+
             if (dresseur1.inventaire.length > 0) {
-                const objet = dresseur1.inventaire[0]; // Utiliser le premier objet de l'inventaire
+                const objet = dresseur1.inventaire[0]; 
                 dresseur1.utiliserObjet(objet.nom, pokemon1);
             } else {
                 console.log("Aucun objet disponible, vous attaquez !");
                 pokemon1.attaquer(dresseur2.pokemons[0]);
             }
         }
-        pokemon1.afficherStats(); // Afficher les stats du Pokémon après l'action
+        pokemon1.afficherStats();
 
-        // Vérifier si l'adversaire est KO
         if (dresseur2.pokemons[0].estKO()) {
             console.log(`${dresseur2.pokemons[0].nom} est K.O.!`);
             if (dresseur2.tousPokemonKO()) {
@@ -279,14 +278,14 @@ function demarrerCombat(dresseur1, dresseur2) {
             }
         }
 
-        // Dresseur 2 choisit une action (attaque ou utilisation d'objet)
+
         console.log(`\n${dresseur2.nom}, c'est votre tour !`);
-        const pokemon2 = dresseur2.choisirPokemon(0); // Le premier Pokémon de l'équipe est sélectionné
+        const pokemon2 = dresseur2.choisirPokemon(0); 
         if (!pokemon2) break;
 
-        // Action : attaque ou utilisation d'objet
+
         if (Math.random() > 0.5) {
-            pokemon2.attaquer(dresseur1.pokemons[0]); // Le premier Pokémon de l'équipe adverse est attaqué
+            pokemon2.attaquer(dresseur1.pokemons[0]); 
         } else {
             if (dresseur2.inventaire.length > 0) {
                 const objet = dresseur2.inventaire[0];
@@ -296,9 +295,9 @@ function demarrerCombat(dresseur1, dresseur2) {
                 pokemon2.attaquer(dresseur1.pokemons[0]);
             }
         }
-        pokemon2.afficherStats(); // Afficher les stats du Pokémon après l'action
+        pokemon2.afficherStats(); 
 
-        // Vérifier si l'adversaire est KO
+
         if (dresseur1.pokemons[0].estKO()) {
             console.log(`${dresseur1.pokemons[0].nom} est K.O.!`);
             if (dresseur1.tousPokemonKO()) {
@@ -307,7 +306,6 @@ function demarrerCombat(dresseur1, dresseur2) {
             }
         }
 
-        // Passer au tour suivant
         tour++;
     }
 }
@@ -327,20 +325,20 @@ const salameche = new Pokemon("Salameche", 90, 35, 15, (attack, target) => {
     console.log(`${attack.nom} utilise Flamme sur ${target.nom} et inflige ${degats} dégâts !`);
 });
 
-// Création des dresseurs
+
 const dresseur1 = new Dresseur("Sacha");
 const dresseur2 = new Dresseur("Ondine");
 
-// Ajout des Pokémon aux équipes
+
 dresseur1.ajouterPokemon(pikachu);
 dresseur1.ajouterPokemon(bulbizarre);
 
 dresseur2.ajouterPokemon(salameche);
 
-// Ajout d'objets aux inventaires
-dresseur1.ajouterObjet(new Potion(20)); // Sacha a une Potion
-dresseur2.ajouterObjet(new BoostAttaque(10)); // Ondine a un Boost d'attaque
 
-// Démarrer le combat
+dresseur1.ajouterObjet(new Potion(20)); 
+dresseur2.ajouterObjet(new BoostAttaque(10)); 
+
+
 demarrerCombat(dresseur1, dresseur2);
 
